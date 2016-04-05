@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li role="presentation" class="active"><a href="/play"><span class="glyphicon glyphicon-play"></span></a></li>
+        <li role="presentation"><a href="/library"><span class="glyphicon glyphicon-music"></span></a></li>
+    </ul>
+
+    <div class="container">
+        <div class="starter-template">
+            <h3 style="text-align: center">Odtwarzacz muzyczny oraz wizualizacja</h3>
+            <br>
+            <p>Aktualnie odtwarzane: <font style="font-style: italic">drum.wav</font></p>
+            <audio controls>
+                <source src="../static/music/drum.wav" type="audio/wav">
+                Twoja przeglądarka nie wspiera odtwarzacza muzyki.
+            </audio>
+        </div>
+    </div>
+{% endblock %}
