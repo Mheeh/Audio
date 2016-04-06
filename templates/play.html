@@ -2,7 +2,11 @@
 {% block content %}
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
-        <li role="presentation" class="active"><a href="/play"><span class="glyphicon glyphicon-play"></span></a></li>
+        {% if music %}
+            <li role="presentation" class="active"><a href="/play/{{ music }}"><span class="glyphicon glyphicon-play"></span></a></li>
+        {% else %}
+            <li role="presentation" class="active"><a href="/play"><span class="glyphicon glyphicon-play"></span></a></li>
+        {% endif %}
         <li role="presentation"><a href="/library"><span class="glyphicon glyphicon-music"></span></a></li>
     </ul>
 
@@ -10,11 +14,15 @@
         <div class="starter-template">
             <h3 style="text-align: center">Odtwarzacz muzyczny oraz wizualizacja</h3>
             <br>
-            <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
-            <audio controls style="width: 100%">
-                <source src="../static/music/{{ music }}" type="audio/wav">
-                Twoja przeglądarka nie wspiera odtwarzacza muzyki.
-            </audio>
+            {% if music %}
+                <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
+                <audio controls style="width: 100%">
+                    <source src="../static/music/{{ music }}" type="audio/wav">
+                    Twoja przeglądarka nie wspiera odtwarzacza muzyki.
+                </audio>
+            {% else %}
+                <p> Przejdź do <a href="/library">biblioteki plików muzycznych</a> w celu wybrania utworu.</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
