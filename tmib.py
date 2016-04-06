@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import os
 
 app = Flask(__name__)
 
@@ -15,7 +16,10 @@ def play():
 
 @app.route('/library')
 def library():
-    return render_template('library.html')
+    library = os.listdir(app.static_folder + '/music')
+    library.sort()
+
+    return render_template('library.html', library=library)
 
 if __name__ == '__main__':
     app.run()

@@ -10,6 +10,12 @@
         <div class="starter-template">
             <h3 style="text-align: center">Biblioteka plików muzycznych</h3>
             <br>
+            <ul>
+            {% for music in library %}
+                <li> {{ music }} </li>
+            {% endfor %}
+            </ul>
+            <br>
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="musicFile">Dodaj plik muzyczny do biblioteki</label>
