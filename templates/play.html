@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <ul class="nav nav-tabs">
-        <li role="presentation"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li role="presentation"><a href="{{ url_for('home')  }}"><span class="glyphicon glyphicon-home"></span></a></li>
         {% if music %}
-            <li role="presentation" class="active"><a href="/play/{{ music }}"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('play') }}/{{ music }}"><span class="glyphicon glyphicon-play"></span></a></li>
         {% else %}
-            <li role="presentation" class="active"><a href="/play"><span class="glyphicon glyphicon-play"></span></a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('play') }}"><span class="glyphicon glyphicon-play"></span></a></li>
         {% endif %}
-        <li role="presentation"><a href="/library"><span class="glyphicon glyphicon-music"></span></a></li>
+        <li role="presentation"><a href="{{ url_for('library') }}"><span class="glyphicon glyphicon-music"></span></a></li>
     </ul>
 
     <div class="container">
@@ -21,7 +21,7 @@
                     Twoja przeglądarka nie wspiera odtwarzacza muzyki.
                 </audio>
             {% else %}
-                <p> Przejdź do <a href="/library">biblioteki plików muzycznych</a> w celu wybrania utworu.</p>
+                <p> Przejdź do <a href="{{ url_for('library') }}">biblioteki plików muzycznych</a> w celu wybrania utworu.</p>
             {% endif %}
         </div>
     </div>
