@@ -10,9 +10,9 @@
         <div class="starter-template">
             <h3 style="text-align: center">Odtwarzacz muzyczny oraz wizualizacja</h3>
             <br>
-            <p>Aktualnie odtwarzane: <font style="font-style: italic">drum.wav</font></p>
+            <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
             <audio controls style="width: 100%">
-                <source src="../static/music/drum.wav" type="audio/wav">
+                <source src="../static/music/{{ music }}" type="audio/wav">
                 Twoja przeglądarka nie wspiera odtwarzacza muzyki.
             </audio>
         </div>

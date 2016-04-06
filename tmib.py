@@ -9,9 +9,9 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/play')
-def play():
-    return render_template('play.html')
+@app.route('/play/<music>')
+def play(music):
+    return render_template('play.html', music=music)
 
 
 @app.route('/library')

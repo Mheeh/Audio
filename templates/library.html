@@ -12,7 +12,7 @@
             <br>
             <ul>
             {% for music in library %}
-                <li> {{ music }} </li>
+                <li><a href="/play/{{ music }}">{{ music }}</a></li>
             {% endfor %}
             </ul>
             <br>
