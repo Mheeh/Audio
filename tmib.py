@@ -37,11 +37,14 @@ def library():
         file = request.files['music']
         if file and allowed_file(file.filename):
             filename = utils.secure_filename(file.filename)
-            if filename in library:
-                flash(Markup(u'Utwór o nazwie <font style="font-style: italic">' + unicode(filename) + u'</font> już istnieje. Zmień nazwę pliku i spróbuj ponownie.'), 'danger')
-            else:
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
+            # CZY PLIK ISTNIEJE W BIBLIOTECE?
+            # if filename in library:
+            #     flash(Markup(u'Utwór o nazwie <font style="font-style: italic">' + unicode(filename) + u'</font> już istnieje. Zmień nazwę pliku i spróbuj ponownie.'), 'danger')
+            # else:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
+        else:
+            flash(u'Plik posiada niedozwolone rozszerzenie.', 'danger')
 
         return redirect(url_for('library'))
 
