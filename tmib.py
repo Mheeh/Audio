@@ -1,8 +1,12 @@
-from flask import Flask, redirect, render_template, request, url_for
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from flask import flash, Flask, Markup, redirect, render_template, request, url_for
 from werkzeug import utils
 import os
 
 app = Flask(__name__)
+app.secret_key = 'tmib@put'
 
 UPLOAD_FOLDER = app.static_folder + '/music'
 ALLOWED_EXTENSIONS = set(['wav'])
@@ -26,16 +30,20 @@ def play(music=None):
 
 @app.route('/library', methods=['GET', 'POST'])
 def library():
+    library = os.listdir(app.config['UPLOAD_FOLDER'])
+    library.sort()
+
     if request.method == 'POST':
         file = request.files['music']
         if file and allowed_file(file.filename):
             filename = utils.secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if filename in library:
+                flash(Markup(u'Plik muzyczny o nazwie <font style="font-style: italic">' + unicode(filename) + u'</font> już istnieje. Zmień nazwę pliku i spróbuj ponownie.'), 'danger')
+            else:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                flash(Markup(u'Plik muzyczny dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
 
         return redirect(url_for('library'))
-
-    library = os.listdir(app.config['UPLOAD_FOLDER'])
-    library.sort()
 
     return render_template('library.html', library=library)
 

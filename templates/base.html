@@ -13,5 +13,19 @@
 <body>
 {% block content %}
 {% endblock %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <br>
+        <div class="container">
+            <div class="starter-template">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert" style="text-align: center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endwith %}
 </body>
 </html>
