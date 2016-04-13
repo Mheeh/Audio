@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    <script src="../static/js/line.js"></script>
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="{{ url_for('home')  }}"><span class="glyphicon glyphicon-home"></span></a></li>
         {% if music %}
@@ -16,13 +17,51 @@
             <br>
             {% if music %}
                 <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
-                <audio controls style="width: 100%">
+                <audio controls id="audio" style="width: 100%" ontimeupdate="drawRedline()">
                     <source src="../static/music/{{ music }}" type="audio/wav">
                     Twoja przeglądarka nie wspiera odtwarzacza muzyki.
                 </audio>
+
             {% else %}
                 <p> Przejdź do <a href="{{ url_for('library') }}">biblioteki plików muzycznych</a> w celu wybrania utworu.</p>
             {% endif %}
+        </div>
+        <div class ="visuals" style="position: relative;">
+                    <div class ="spectro" style="position: relative;display: block; float: left; width: 100%; height: 200px; overflow: hidden">
+                        <canvas id = "spectroBck" height="800px" width="800px" style="position: absolute;top: 0px;left: 0px;z-index: 2">
+                            <script>
+                              var canvas2 = document.getElementById('spectroBck');
+                              var context2 = canvas2.getContext('2d');
+                              var imageObj2 = new Image();
+
+                              imageObj2.onload = function() {
+                                context2.drawImage(imageObj2, 0, 0);
+                              };
+                              imageObj2.src = '../static/img/Capture.JPG';
+                            </script>
+                        </canvas>
+                        <canvas class="redLine" height="800px" width="800px" style="position: absolute;top: 0px;left: 0px; z-index: 3">
+
+                        </canvas>
+                    </div>
+                    <div class ="waveform" style="position: relative;display: block; float: left; width: 100%;margin-top: 30px; overflow: hidden">
+                        <canvas id = "waveformBck" height="800px" width="800px" style="position: absolute;top: 0px;left: 0px;z-index: 2">
+                            <script>
+                              var canvas = document.getElementById('waveformBck');
+                              var context = canvas.getContext('2d');
+                              var imageObj = new Image();
+
+                              imageObj.onload = function() {
+                                context.drawImage(imageObj, 0, 0);
+                              };
+                              imageObj.src = '../static/img/Capture.JPG';
+                            </script>
+                        </canvas>
+                        <canvas class="redLine" height="800px" width="800px" style="position: absolute;top: 0px;left: 0px; z-index: 3">
+
+                        </canvas>
+                    </div>
+
         </div>
     </div>
 {% endblock %}
