@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <script src="../static/js/line.js"></script>
+    <script src="../static/js/d3.v3.min.js" charset="utf-8"></script>
+    <script src="../static/js/app.js"></script>
+
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="{{ url_for('home')  }}"><span class="glyphicon glyphicon-home"></span></a></li>
         {% if music %}
@@ -17,6 +20,8 @@
             <br>
             {% if music %}
                 <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
+                <div id = "equali" style = "width: 100%; height: 25px">
+                </div>
                 <audio controls id="audio" style="width: 100%" ontimeupdate="drawRedline()">
                     <source src="../static/music/{{ music }}" type="audio/wav">
                     Twoja przeglądarka nie wspiera odtwarzacza muzyki.
@@ -44,7 +49,7 @@
 
                         </canvas>
                     </div>
-                    <div class ="waveform" style="position: relative;display: block; float: left; width: 100%;margin-top: 30px; overflow: hidden">
+                    <div class ="waveform" style="position: relative;display: block; float: left; width: 100%;height: 200px;margin-top: 30px; overflow: hidden">
                         <canvas id = "waveformBck" height="800px" width="800px" style="position: absolute;top: 0px;left: 0px;z-index: 2">
                             <script>
                               var canvas = document.getElementById('waveformBck');
@@ -61,7 +66,6 @@
 
                         </canvas>
                     </div>
-
         </div>
     </div>
 {% endblock %}
