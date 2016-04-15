@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# using python 2.7 Anaconda Interpreter
 
 from flask import flash, Flask, Markup, redirect, render_template, request, url_for
 from werkzeug import utils
 import os
+import specto
 
 app = Flask(__name__)
 app.secret_key = 'tmib@put'
@@ -42,6 +44,11 @@ def library():
             #     flash(Markup(u'Utwór o nazwie <font style="font-style: italic">' + unicode(filename) + u'</font> już istnieje. Zmień nazwę pliku i spróbuj ponownie.'), 'danger')
             # else:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # w tym miejscu obróbka i generacja obrazków
+            spectoname = "specto"+filename+".png"
+            spectofullpath=app.static_folder+"/img/"+spectoname
+            filefullpath=os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            specto.plotstft(filefullpath,plotpath=spectofullpath)
             flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
         else:
             flash(u'Plik posiada niedozwolone rozszerzenie.', 'danger')
