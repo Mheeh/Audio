@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 import scipy.io.wavfile as wav
 from numpy.lib import stride_tricks
 
+
 """ short time fourier transform of audio signal """
 def stft(sig, frameSize, overlapFac=0.99, window=np.hanning):
     #frameSize = 128
@@ -65,7 +66,15 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
 
     timebins, freqbins = np.shape(ims)
 
-    plt.figure(figsize=(15, 7.5))
+    xPx = 1175
+    yPx = 676
+    xSize = 15
+    ySize = 7.5
+    dpi = np.floor((xPx*yPx)/(xSize*ySize))
+
+    plt.figure(figsize=(xSize, ySize))
+
+
 
     plt.imshow(np.transpose(ims), origin="lower", aspect="auto", cmap=colormap, interpolation="none")
     plt.colorbar()
@@ -82,11 +91,11 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     plt.yticks(ylocs, ["%.02f" % freq[i] for i in ylocs])
 
     if plotpath is not None:
-        plt.savefig(plotpath, bbox_inches="tight")
+        plt.savefig(plotpath)
     else:
         plt.show()
 
     plt.clf()
 
 if __name__ == "__main__":
-   plotstft("./static/music/jungle.wav", plotpath="spec.png")
+   plotstft("./static/music/temp.wav", plotpath="spec2.png")

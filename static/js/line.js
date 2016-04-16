@@ -15,8 +15,8 @@ function drawRedline(){
         var canva = redLineAreas[i];
 
         //zmienne pomocnicze dotyczace marginesu
-        var leftMarginPerc = 0.0936;
-        var rightMarginPerc = 0.1157;
+        var leftMarginPerc = 0.1253;
+        var rightMarginPerc = 0.2553;
         var leftMargin = canva.width*leftMarginPerc;
         var rightMargin = canva.width*rightMarginPerc
 
