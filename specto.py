@@ -64,8 +64,9 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     #konwersja do mono.
     ##nie działa
     #samples2 = np.array(np.mean(samples,axis=1,dtype=samples.dtype),dtype=samples.dtype)
+    #samples2 = np.array(np.sum(samples,axis=1),dtype=samples.dtype)
 
-    s = stft(samples2, binsize)
+    s = stft(samples, binsize)
 
     file = orgwave.open(audiopath,'rb')
     nchannels,sampwidth,framerate,nframes = file.getparams()[0:4]
