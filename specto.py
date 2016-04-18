@@ -2,12 +2,13 @@
 #coding: utf-8
 """ This work is licensed under a Creative Commons Attribution 3.0 Unported License.
     Frank Zalkow, 2012-2013 """
+"""Modified by: Ariel Antonowicz, Marcin Lipa, Dariusz Urbanski, 2016 """
 
 import numpy as np
 from matplotlib import pyplot as plt
 import scipy.io.wavfile as wav
 from numpy.lib import stride_tricks
-
+import wave as orgwave
 
 """ short time fourier transform of audio signal """
 def stft(sig, frameSize, overlapFac=0.99, window=np.hanning):
@@ -58,7 +59,22 @@ def logscale_spec(spec, sr=44100, factor=20.):
 """ plot spectrogram"""
 def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     samplerate, samples = wav.read(audiopath)
-    s = stft(samples, binsize)
+
+
+    #konwersja do mono.
+    ##nie działa
+    #samples2 = np.array(np.mean(samples,axis=1,dtype=samples.dtype),dtype=samples.dtype)
+
+    s = stft(samples2, binsize)
+
+    file = orgwave.open(audiopath,'rb')
+    nchannels,sampwidth,framerate,nframes = file.getparams()[0:4]
+
+    print "Channels: ",nchannels
+    print "sampleWidth: ",sampwidth
+    print "framerate: ",framerate
+    print "nframes: ",nframes
+
    # print samplerate
     print "Sample " + str(len(samples))
     sshow, freq = logscale_spec(s, factor=1.0, sr=samplerate)
@@ -98,4 +114,4 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     plt.clf()
 
 if __name__ == "__main__":
-   plotstft("./static/music/temp.wav", plotpath="spec2.png")
+   plotstft("./static/music/temp.wav", plotpath="spec3.png")
