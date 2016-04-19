@@ -11,12 +11,17 @@ function drawRedline(){
     var percentage = currTime/duration;
 
     var redLineAreas = $(".redLine");
+
+    var leftMarginPerc = 0.1253;
+    var rightMarginPerc = 0.2553;
+
     for(var i = 0; i < redLineAreas.length;i++){
         var canva = redLineAreas[i];
 
         //zmienne pomocnicze dotyczace marginesu
-        var leftMarginPerc = 0.1253;
-        var rightMarginPerc = 0.2553;
+        if(i==1){
+            rightMarginPerc=0.1;
+        }
         var leftMargin = canva.width*leftMarginPerc;
         var rightMargin = canva.width*rightMarginPerc
 

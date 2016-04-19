@@ -29,14 +29,14 @@ def plotGraph(filename,graphpath=None):
     for i in range(0,nchannels):
         frames.append(file.readframes(nframes=1))
 
-    xSize = 15
-    ySize = 6
+    xSize = 12
+    ySize = 3
 
     data = data.astype(np.float, copy=False)
     data = data / 2 ** (8 * sampwidth)
     data = data - (data.max() + data.min()) / 2
 
-    plt.figure(figsize=(xSize, ySize*nchannels+10*(nchannels-1)))
+    plt.figure(figsize=(xSize, ySize*nchannels))
     for i in range(0,nchannels):
         plt.subplot(211+i)
         plt.title('Channel '+str(i+1))
@@ -50,9 +50,9 @@ def plotGraph(filename,graphpath=None):
     print "Done"
 
     if graphpath is not None:
-        plt.savefig(filename, graphpath)
+        plt.savefig(graphpath)
     else:
         plt.show()
 
 if __name__ == "__main__":
-    plotGraph(filename="./static/music/temp.wav")
+    plotGraph(filename="./static/music/temp.wav",graphpath="test.png")
