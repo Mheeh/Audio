@@ -6,6 +6,7 @@ from flask import flash, Flask, Markup, redirect, render_template, request, url_
 from werkzeug import utils
 import os
 import specto
+import amplitude
 
 app = Flask(__name__)
 app.secret_key = 'tmib@put'
@@ -46,9 +47,12 @@ def library():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # w tym miejscu obróbka i generacja obrazków
             spectoname = "specto"+filename+".png"
+            ampname = "amp"+filename+".png"
             spectofullpath=app.static_folder+"/img/"+spectoname
+            ampfullpath=app.static_folder+"/img/"+ampname
             filefullpath=os.path.join(app.config['UPLOAD_FOLDER'], filename)
             specto.plotstft(filefullpath,plotpath=spectofullpath)
+            amplitude.plotGraph(filefullpath,graphpath=ampfullpath)
             flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
         else:
             flash(u'Plik posiada niedozwolone rozszerzenie.', 'danger')

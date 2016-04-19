@@ -62,9 +62,13 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
 
 
     #konwersja do mono.
-    ##nie działa
+    ##nie uzywana
     #samples2 = np.array(np.mean(samples,axis=1,dtype=samples.dtype),dtype=samples.dtype)
     #samples2 = np.array(np.sum(samples,axis=1),dtype=samples.dtype)
+
+    # Rozdzielanie kanalow, tez nie uzywane
+    #samples = np.array(samples.T[1],dtype=samples.dtype)
+
 
     s = stft(samples, binsize)
 
@@ -115,4 +119,4 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     plt.clf()
 
 if __name__ == "__main__":
-   plotstft("./static/music/temp.wav", plotpath="spec3.png")
+   plotstft("./static/music/temp.wav", plotpath="spec4.png")

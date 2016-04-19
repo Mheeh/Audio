@@ -36,16 +36,27 @@
                         <canvas id = "spectroBck" width="1500px" height="750px" style="position: absolute;top: 0px;left: 0px;z-index: 2">
                             <script>
                                 function loadSpecto() {
-                                    var canvas2 = document.getElementById('spectroBck');
-                                    var context2 = canvas2.getContext('2d');
-                                    var imageObj2 = new Image();
+                                    var canvas = document.getElementById('spectroBck');
+                                    var context = canvas.getContext('2d');
+                                    var imageObj = new Image();
 
-                                    imageObj2.onload = function () {
-                                        context2.drawImage(imageObj2, 0, 0);
+                                    imageObj.onload = function () {
+                                        context.drawImage(imageObj, 0, 0);
                                     };
-                                    imageObj2.src = '../static/img/specto{{ music }}.png';
+                                    imageObj.src = '../static/img/specto{{ music }}.png';
+
+                                    imageObj.onload(function(){
+                                        canvas.parentNode.width = imageObj.width
+                                        canvas.parentNode.height = imageObj.height
+                                        for(var i = 0; i < canvas.parentNode.childNodes.length;i++){
+                                            canvas.parentNode.childNodes[i].height = imageObj.height;
+                                            canvas.parentNode.childNodes[i].width = imageObj.width;
+                                        }
+                                    })
+
+
                                 }
-                                loadSpecto();
+                                $(document).ready(function(){loadSpecto();})
                             </script>
                         </canvas>
                         <canvas class="redLine" width="1500" height="750px" style="position: absolute;top: 0px;left: 0px; z-index: 3">
@@ -63,7 +74,13 @@
                                     imageObj.onload = function () {
                                         context.drawImage(imageObj, 0, 0);
                                     };
-                                    imageObj.src = '../static/img/Capture.JPG';
+                                    imageObj.src = '../static/img/amp{{ music }}.png';
+
+                                    for(var i = 0; i < canvas.parentNode.childNodes.length;i++){
+                                        canvas.parentNode.childNodes[i].height = imageObj.height;
+                                        canvas.parentNode.childNodes[i].width = imageObj.width;
+                                    }
+
                                 }
                                 loadAmp();
                             </script>
