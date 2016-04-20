@@ -8,7 +8,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import scipy.io.wavfile as wav
 from numpy.lib import stride_tricks
-import wave as orgwave
+import wave
+import numpy as np
 
 """ short time fourier transform of audio signal """
 def stft(sig, frameSize, overlapFac=0.99, window=np.hanning):
@@ -60,6 +61,14 @@ def logscale_spec(spec, sr=44100, factor=20.):
 def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     samplerate, samples = wav.read(audiopath)
 
+    file = wave.open(audiopath, 'rb')
+    nchannels, sampwidth, framerate, nframes = file.getparams()[0:4]
+
+    samples = samples.astype(np.float, copy=False)
+
+    if nchannels > 1:
+        samples2 = np.mean(a=samples, axis=1)
+        samples = samples2
 
     #konwersja do mono.
     ##nie uzywana
@@ -71,9 +80,6 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
 
 
     s = stft(samples, binsize)
-
-    file = orgwave.open(audiopath,'rb')
-    nchannels,sampwidth,framerate,nframes = file.getparams()[0:4]
 
     print "Channels: ",nchannels
     print "sampleWidth: ",sampwidth
@@ -119,4 +125,4 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     plt.clf()
 
 if __name__ == "__main__":
-   plotstft("./static/music/temp.wav", plotpath="spec4.png")
+   plotstft("./static/music/temp.wav")
