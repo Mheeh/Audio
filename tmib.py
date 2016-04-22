@@ -1,18 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# using python 2.7 Anaconda Interpreter
+
+# Using: Python 2.7 Anaconda 4.0.0
 
 from flask import flash, Flask, Markup, redirect, render_template, request, url_for
 from werkzeug import utils
-import os
-import specto
 import amplitude
+import os
+# TODO CHANGE NAME
+import specto
 
 app = Flask(__name__)
 app.secret_key = 'tmib@put'
 
+IMAGE_FOLDER = app.static_folder + '/img'
 UPLOAD_FOLDER = app.static_folder + '/music'
 ALLOWED_EXTENSIONS = set(['wav'])
+app.config['IMAGE_FOLDER'] = IMAGE_FOLDER
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -44,15 +48,20 @@ def library():
             # if filename in library:
             #     flash(Markup(u'Utwór o nazwie <font style="font-style: italic">' + unicode(filename) + u'</font> już istnieje. Zmień nazwę pliku i spróbuj ponownie.'), 'danger')
             # else:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # w tym miejscu obróbka i generacja obrazków
-            spectoname = "specto"+filename+".png"
-            ampname = "amp"+filename+".png"
-            spectofullpath=app.static_folder+"/img/"+spectoname
-            ampfullpath=app.static_folder+"/img/"+ampname
-            filefullpath=os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            specto.plotstft(filefullpath,plotpath=spectofullpath)
-            amplitude.plotGraph(filefullpath,graphpath=ampfullpath)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+
+            # GENEROWANIE OBRAZKÓW
+            name = filename.rsplit('.', 1)[0]
+            amplitude_name = "a_" + name + ".png"
+            spectrogram_name = "s_" + name + ".png"
+            amplitude_path = app.config['IMAGE_FOLDER'] + '/amplitudes/' + amplitude_name
+            spectrogram_path = app.config['IMAGE_FOLDER'] + '/spectrograms/' + spectrogram_name
+
+            #TODO GENERATE AMPLITUDE AND SPECTROGRAM
+            amplitude.plotGraph(file_path, graphpath=amplitude_path)
+            specto.plotstft(file_path, plotpath=spectrogram_path)
+
             flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
         else:
             flash(u'Plik posiada niedozwolone rozszerzenie.', 'danger')

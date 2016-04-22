@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-    <script src="../static/js/line.js"></script>
-    <script src="../static/js/d3.v3.min.js" charset="utf-8"></script>
     <script src="../static/js/app.js"></script>
+    <script src="../static/js/d3.v3.min.js" charset="utf-8"></script>
+    <script src="../static/js/line.js"></script>
 
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="{{ url_for('home')  }}"><span class="glyphicon glyphicon-home"></span></a></li>
@@ -20,17 +20,19 @@
             <br>
             {% if music %}
                 <p>Aktualnie odtwarzane: <font style="font-style: italic">{{ music }}</font></p>
+{#                TODO CHANGE NAME#}
                 <div id = "equali" style = "width: 100%; height: 25px">
                 </div>
                 <audio controls id="audio" style="width: 100%" ontimeupdate="drawRedline()">
                     <source src="../static/music/{{ music }}" type="audio/wav">
                     Twoja przeglądarka nie wspiera odtwarzacza muzyki.
                 </audio>
-
             {% else %}
                 <p> Przejdź do <a href="{{ url_for('library') }}">biblioteki plików muzycznych</a> w celu wybrania utworu.</p>
             {% endif %}
         </div>
+{#        TODO MOVE TO FIRST IF#}
+        {% if music %}
         <div class ="visuals" style="position: relative;">
                     <div class ="spectro" width= "1500px" height="750px" style="position: relative;display: block; float: left; overflow: hidden">
                         <canvas id = "spectroBck" width="1500px" height="750px" style="position: absolute;top: 0px;left: 0px;z-index: 2">
@@ -40,7 +42,7 @@
                                     var context = canvas.getContext('2d');
                                     var imageObj = new Image();
 
-                                    imageObj.src = '../static/img/specto{{ music }}.png';
+                                    imageObj.src = '../static/img/spectrograms/s_{{ music.rsplit('.', 1)[0] }}.png';
 
                                     imageObj.onload = function () {
                                         $('.spectro').css('width',imageObj.width);
@@ -67,7 +69,7 @@
                                     var context = canvas.getContext('2d');
                                     var imageObj = new Image();
 
-                                    imageObj.src = '../static/img/amp{{ music }}.png';
+                                    imageObj.src = '../static/img/amplitudes/a_{{ music.rsplit('.', 1)[0] }}.png';
                                     imageObj.onload = function () {
 
                                         $('.waveform').css('width',imageObj.width);
@@ -90,5 +92,6 @@
                         </canvas>
                     </div>
         </div>
+        {%  endif %}
     </div>
 {% endblock %}
