@@ -9,6 +9,7 @@ import amplitude
 import os
 # TODO CHANGE NAME
 import specto
+import spectrum_test as freq
 
 app = Flask(__name__)
 app.secret_key = 'tmib@put'
@@ -55,13 +56,15 @@ def library():
             name = filename.rsplit('.', 1)[0]
             amplitude_name = "a_" + name + ".png"
             spectrogram_name = "s_" + name + ".png"
+            frequency_name = "f_" + name + ".png"
             amplitude_path = app.config['IMAGE_FOLDER'] + '/amplitudes/' + amplitude_name
             spectrogram_path = app.config['IMAGE_FOLDER'] + '/spectrograms/' + spectrogram_name
+            frequency_path = app.config['IMAGE_FOLDER'] + '/frequencies/' + frequency_name
 
             #TODO GENERATE AMPLITUDE AND SPECTROGRAM
             amplitude.plotGraph(file_path, graphpath=amplitude_path)
             specto.plotstft(file_path, plotpath=spectrogram_path)
-
+            freq.plotFreqSpec(file_path,graphpath=frequency_path)
             flash(Markup(u'Utwór dodano jako <font style="font-style: italic">' + unicode(filename) + u'</font>.'), 'success')
         else:
             flash(u'Plik posiada niedozwolone rozszerzenie.', 'danger')

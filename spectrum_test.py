@@ -45,6 +45,11 @@ def plotFreqSpec(filename,graphpath=None):
     x_freq = x_freq*len(mags)
     x_freq = np.arange(0,x_freq, step =framerate/2./windowsize)
 
+    xSize = 7
+    ySize = 3
+
+    plt.figure(figsize=(xSize, ySize))
+
     # plot
     #plt.plot(mags)
     plt.plot(mags)
@@ -55,9 +60,9 @@ def plotFreqSpec(filename,graphpath=None):
     # set the title
     plt.title("Spectrum")
     if graphpath is not None:
-        plt.savefig("Spectrum.png")
+        plt.savefig(graphpath)
     else:
         plt.show()
 
 if __name__ == "__main__":
-    plotFreqSpec("./static/music/cello.wav")
+    plotFreqSpec("./static/music/jungle.wav")

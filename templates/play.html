@@ -91,6 +91,30 @@
 
                         </canvas>
                     </div>
+                    <div class ="frequency" style="position: relative;display: block; float: left; overflow: hidden">
+                            <canvas id="frequencyBck">
+                            <script>
+                                    function loadFreq() {
+                                        var canvas = document.getElementById('frequencyBck');
+                                        var context = canvas.getContext('2d');
+                                        var imageObj = new Image();
+
+                                        imageObj.src = '../static/img/frequencies/f_{{ music.rsplit('.', 1)[0] }}.png';
+                                        imageObj.onload = function () {
+
+                                            $('.frequency').css('width',imageObj.width);
+                                            $('.frequency').css('height',imageObj.height);
+
+                                            $('.frequency canvas').attr('width',imageObj.width);
+                                            $('.frequency canvas').attr('height',imageObj.height);
+                                            context.drawImage(imageObj, 0, 0,imageObj.width,imageObj.height);
+                                        };
+
+                                    }
+                                    $(document).ready(function(){loadFreq();});
+                                </script>
+                            </canvas>
+                    </div>
         </div>
         {%  endif %}
     </div>
