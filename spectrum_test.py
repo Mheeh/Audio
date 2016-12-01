@@ -21,26 +21,43 @@ def plotFreqSpec(filename,graphpath=None):
         data = data2
 
 
-    windowsize = 1024
+    windowsize = 512
     lackingFrames = nframes%windowsize
-    data = np.append(data,[0]*lackingFrames)
+
+    if lackingFrames>0:
+        data = np.append(data, np.tile(0, lackingFrames))
+
     window = hann(windowsize)
     data = data/(2**(sampwidth*8)) #data/sampwidth
     audio = data
 
 
+    loopcount = nframes//windowsize
 
 
-
-    for i in range(0,nframes//windowsize):
+    for i in range(0,loopcount):
         # apply a Hanning window
-        audio[(i*windowsize):((i+1)*windowsize)] = audio[(i*windowsize):((i+1)*windowsize)]*window
-    # fft
-    mags = abs(rfft(audio))
+        #audio[(i*windowsize):((i+1)*windowsize)] =
+        fftdat = np.array(audio[(i*windowsize):((i+1)*windowsize)]*window)
+        if i == 0:
+            magstotal = rfft(fftdat)
+        else:
+            magstotal += rfft(fftdat)
+
+        #magstotal  = abs(rfft(fftdat))
+        # fft
+
+    if(loopcount>0):
+        magstotal = magstotal/loopcount
+
+    mags = magstotal
+    mags = abs(mags)
     # convert to dB
     mags = 20*scipy.log10(mags)
     # normalise to 0 dB max
     mags -= max(mags)
+
+
     x_freq = framerate/2./windowsize
     x_freq = x_freq*len(mags)
     x_freq = np.arange(0,x_freq, step =framerate/2./windowsize)
@@ -52,10 +69,10 @@ def plotFreqSpec(filename,graphpath=None):
 
     # plot
     #plt.plot(mags)
-    plt.plot(mags)
+    plt.plot(x_freq,mags)
     # label the axes
     plt.ylabel("Magnitude (dB)")
-    plt.ylim((-90,0))
+    #plt.ylim((-90,0))
     plt.xlabel("Frequency Bin")
     # set the title
     plt.title("Spectrum")
@@ -65,4 +82,4 @@ def plotFreqSpec(filename,graphpath=None):
         plt.show()
 
 if __name__ == "__main__":
-    plotFreqSpec("./static/music/jungle.wav")
+    plotFreqSpec("./static/music/temp.wav")

@@ -125,4 +125,4 @@ def plotstft(audiopath, binsize=2**10, plotpath=None, colormap="jet"):
     plt.clf()
 
 if __name__ == "__main__":
-   plotstft("./static/music/temp.wav")
+   plotstft("./static/music/drum.wav")
